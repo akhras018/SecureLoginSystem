@@ -1,0 +1,173 @@
+﻿@page
+@model SecureLoginSystem.Pages.LoginModel
+@{
+    ViewData["Title"] = "Login";
+}
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(135deg, #dbeafe, #eff6ff, #ffffff);
+        font-family: Arial, sans-serif;
+    }
+
+    .login-wrapper {
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+    }
+
+    .login-card {
+        width: 100%;
+        max-width: 420px;
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+        padding: 35px;
+    }
+
+    .login-title {
+        text-align: center;
+        font-size: 30px;
+        font-weight: bold;
+        color: #1e3a8a;
+        margin-bottom: 10px;
+    }
+
+    .login-subtitle {
+        text-align: center;
+        color: #6b7280;
+        margin-bottom: 30px;
+        font-size: 15px;
+    }
+
+    .form-group {
+        margin-bottom: 18px;
+    }
+
+    .form-label {
+        display: block;
+        margin-bottom: 7px;
+        font-weight: bold;
+        color: #374151;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 12px 14px;
+        border: 1px solid #d1d5db;
+        border-radius: 12px;
+        font-size: 15px;
+        box-sizing: border-box;
+        transition: 0.3s;
+    }
+
+    .form-control:focus {
+        outline: none;
+        border-color: #2563eb;
+        box-shadow: 0 0 0 3px rgba(37,99,235,0.15);
+    }
+
+    .btn-login {
+        width: 100%;
+        background: #2563eb;
+        color: white;
+        border: none;
+        padding: 13px;
+        border-radius: 12px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .btn-login:hover {
+        background: #1d4ed8;
+    }
+
+    .links {
+        margin-top: 18px;
+        display: flex;
+        justify-content: space-between;
+        font-size: 14px;
+    }
+
+    .links a {
+        text-decoration: none;
+        color: #2563eb;
+        font-weight: bold;
+    }
+
+    .text-danger {
+        color: red;
+        font-size: 13px;
+    }
+
+    .message-box {
+        margin-bottom: 15px;
+        padding: 10px;
+        border-radius: 10px;
+        background-color: #fee2e2;
+        color: #991b1b;
+        text-align: center;
+    }
+
+    .message-success {
+        margin-bottom: 15px;
+        padding: 10px;
+        border-radius: 10px;
+        background-color: #dcfce7;
+        color: #166534;
+        text-align: center;
+    }
+
+    .message-error {
+        margin-bottom: 15px;
+        padding: 10px;
+        border-radius: 10px;
+        background-color: #fee2e2;
+        color: #991b1b;
+        text-align: center;
+    }
+</style>
+
+<div class="login-wrapper">
+    <div class="login-card">
+        <div class="login-title">Secure Login</div>
+        <div class="login-subtitle">Enter your username and password</div>
+
+        @if (!string.IsNullOrEmpty(Model.Message))
+        {
+            <div class="@(Model.IsSuccess ? "message-success" : "message-error")">
+                @Model.Message
+            </div>
+        }
+
+        <form method="post">
+            <div class="form-group">
+                <label asp-for="Input.Username" class="form-label"></label>
+                <input asp-for="Input.Username" class="form-control" placeholder="Enter username" />
+                <span asp-validation-for="Input.Username" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Input.Password" class="form-label"></label>
+                <input asp-for="Input.Password" type="password" class="form-control" placeholder="Enter password" />
+                <span asp-validation-for="Input.Password" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="btn-login">Log In</button>
+
+            <div class="links">
+                <a href="/ForgotPassword">Forgot Password?</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
