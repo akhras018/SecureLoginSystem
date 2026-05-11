@@ -16,13 +16,14 @@ namespace SecureLoginSystem.Pages
         }
 
         [BindProperty]
-        public InputModel Input { get; set; }
+        public InputModel Input { get; set; } = new InputModel();
 
         public string Message { get; set; }
 
         public class InputModel
         {
-            [Required]
+            [Required(ErrorMessage = "Username is required")]
+            [Display(Name = "Username")]
             public string Username { get; set; }
         }
 

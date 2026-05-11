@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-
+using Microsoft.AspNetCore.Http;
 namespace SecureLoginSystem.Pages
 {
     public class LoginModel : PageModel
@@ -38,10 +38,10 @@ namespace SecureLoginSystem.Pages
         {
         }
 
-        public void OnPost()
+        public IActionResult OnPost()
         {
             if (!ModelState.IsValid)
-                return;
+                return Page();
 
             string hashedPassword = HashPassword(Input.Password);
 
@@ -51,18 +51,26 @@ namespace SecureLoginSystem.Pages
 
             if (user != null)
             {
-                IsSuccess = true;
+                HttpContext.Session.SetString("Username", user.Username);
+                HttpContext.Session.SetString("Role", user.Role);
 
                 if (user.Role == "Admin")
-                    Message = "Login successful. Welcome Admin.";
+                {
+                    return RedirectToPage("/AdminUsers");
+                }
                 else
+                {
                     Message = "Login successful. Welcome User.";
+                    IsSuccess = true;
+                }
             }
             else
             {
                 IsSuccess = false;
                 Message = "Invalid username or password.";
             }
+
+            return Page();
         }
 
         private string HashPassword(string password)

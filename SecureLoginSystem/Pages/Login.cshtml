@@ -132,6 +132,27 @@
         color: #991b1b;
         text-align: center;
     }
+
+    .btn-vulnerable {
+        display: block;
+        width: 100%;
+        margin-top: 12px;
+        background: #dc2626;
+        color: white;
+        text-align: center;
+        text-decoration: none;
+        border: none;
+        padding: 13px;
+        border-radius: 12px;
+        font-size: 15px;
+        font-weight: bold;
+        cursor: pointer;
+        box-sizing: border-box;
+    }
+
+        .btn-vulnerable:hover {
+            background: #b91c1c;
+        }
 </style>
 
 <div class="login-wrapper">
@@ -160,7 +181,9 @@
             </div>
 
             <button type="submit" class="btn-login">Log In</button>
-
+            <a href="/VulnerableLogin" class="btn-vulnerable">
+                Go to Vulnerable Login Demo
+            </a>
             <div class="links">
                 <a href="/ForgotPassword">Forgot Password?</a>
             </div>

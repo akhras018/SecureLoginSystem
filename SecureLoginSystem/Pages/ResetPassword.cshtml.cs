@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using SecureLoginSystem.Data;
-using System;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Security.Cryptography;
@@ -19,29 +18,35 @@ namespace SecureLoginSystem.Pages
         }
 
         [BindProperty]
-        public InputModel Input { get; set; }
+        public InputModel Input { get; set; } = new InputModel();
 
-        public string SuccessMessage { get; set; }
+        public string ErrorMessage { get; set; }
 
         public class InputModel
         {
+            [Required]
             public string Username { get; set; }
 
-            [Required]
+            [Required(ErrorMessage = "New password is required")]
             [DataType(DataType.Password)]
             [Display(Name = "New Password")]
             public string NewPassword { get; set; }
 
-            [Required]
+            [Required(ErrorMessage = "Confirm password is required")]
             [DataType(DataType.Password)]
             [Display(Name = "Confirm Password")]
-            [Compare("NewPassword", ErrorMessage = "Passwords do not match.")]
+            [Compare("NewPassword", ErrorMessage = "Passwords do not match")]
             public string ConfirmPassword { get; set; }
         }
 
         public IActionResult OnGet(string username)
         {
             if (string.IsNullOrEmpty(username))
+                return RedirectToPage("/ForgotPassword");
+
+            var user = _context.Users.FirstOrDefault(u => u.Username == username);
+
+            if (user == null)
                 return RedirectToPage("/ForgotPassword");
 
             Input = new InputModel
@@ -61,20 +66,12 @@ namespace SecureLoginSystem.Pages
 
             if (user == null)
             {
-                ModelState.AddModelError(string.Empty, "User not found.");
+                ErrorMessage = "User not found.";
                 return Page();
             }
 
             user.PasswordHash = HashPassword(Input.NewPassword);
             _context.SaveChanges();
-
-            SuccessMessage = "Password changed successfully. You can now log in.";
-            ModelState.Clear();
-
-            Input = new InputModel
-            {
-                Username = user.Username
-            };
 
             return RedirectToPage("/Login");
         }
