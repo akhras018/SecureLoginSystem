@@ -25,9 +25,3 @@
     <button type="submit">Login</button>
 </form>
 
-@if (!string.IsNullOrEmpty(Model.QueryUsed))
-{
-    <hr />
-    <h3>SQL Query Used:</h3>
-    <pre>@Model.QueryUsed</pre>
-}

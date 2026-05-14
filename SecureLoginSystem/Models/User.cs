@@ -7,11 +7,9 @@ namespace SecureLoginSystem.Models
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Username is required")]
-        [RegularExpression(@"^[A-Za-z0-9_]{3,20}$",
-            ErrorMessage = "Username must be 3-20 characters and contain only English letters, numbers or underscore")]
+        
         public string Username { get; set; }
 
-        [Required(ErrorMessage = "Password hash is required")]
         public string PasswordHash { get; set; }
 
         [Required(ErrorMessage = "Role is required")]

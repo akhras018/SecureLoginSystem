@@ -177,7 +177,7 @@
             <div class="form-group">
                 <label asp-for="Input.Password" class="form-label"></label>
                 <input asp-for="Input.Password" type="password" class="form-control" placeholder="Enter password" />
-                <span asp-validation-for="Input.Password" class="text-danger"></span>
+                <span asp-for="Input.Password" class="text-danger"></span>
             </div>
 
             <button type="submit" class="btn-login">Log In</button>

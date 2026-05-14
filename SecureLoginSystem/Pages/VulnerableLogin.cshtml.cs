@@ -36,9 +36,7 @@ namespace SecureLoginSystem.Pages
 
             string connectionString = _configuration.GetConnectionString("DefaultConnection");
 
-            string query =
-                "SELECT * FROM Users WHERE Username = '" + Username +
-                "' AND PasswordHash = '" + hashedPassword + "'";
+            string query =$"SELECT * FROM Users WHERE Username ='{Username}' AND PasswordHash ='{hashedPassword}'";
 
             QueryUsed = query;
 
